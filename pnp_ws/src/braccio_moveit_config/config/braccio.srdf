@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="braccio">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="braccio_arm">
+        <joint name="base_joint"/>
+        <joint name="shoulder_joint"/>
+        <joint name="elbow_joint"/>
+        <joint name="wrist_pitch_joint"/>
+        <joint name="wrist_roll_joint"/>
+        <chain base_link="braccio_base_link" tip_link="wrist_roll_link"/>
+    </group>
+    <group name="braccio_gripper">
+        <joint name="gripper_joint"/>
+        <joint name="sub_gripper_joint"/>
+    </group>
+    <group name = "braccio_arm_gripper">
+	<group name = "braccio_arm"/>
+	<group name = "braccio_gripper"/>
+    </group>   
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="home" group="braccio_arm">
+        <joint name="base_joint" value="1.48353"/>
+        <joint name="elbow_joint" value="2.8"/>
+        <joint name="shoulder_joint" value="2.8"/>
+        <joint name="wrist_pitch_joint" value="4.2"/>
+        <joint name="wrist_roll_joint" value="2.93215"/>
+    </group_state>
+    <group_state name="ready" group="braccio_arm">
+        <joint name="base_joint" value="1.48353"/>
+        <joint name="elbow_joint" value="3.633"/>
+        <joint name="shoulder_joint" value="3.175"/>
+        <joint name="wrist_pitch_joint" value="3.223"/>
+        <joint name="wrist_roll_joint" value="2.8"/>
+    </group_state>
+    <group_state name="extended" group="braccio_arm">
+        <joint name="base_joint" value="2.8"/>
+        <joint name="elbow_joint" value="2.8"/>
+        <joint name="shoulder_joint" value="2.8"/>
+        <joint name="wrist_pitch_joint" value="2.8"/>
+        <joint name="wrist_roll_joint" value="2.8"/>
+    </group_state>
+    <group_state name="open" group="braccio_gripper">
+        <joint name="gripper_joint" value="3.75246"/>
+    </group_state>
+    <group_state name="closed" group="braccio_gripper">
+        <joint name="gripper_joint" value="2.7"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="braccio_gripper" parent_link="wrist_roll_link" group="braccio_gripper"/>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="braccio_base_link" reason="Adjacent"/>
+    <disable_collisions link1="braccio_base_link" link2="shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="elbow_link" link2="shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="elbow_link" link2="wrist_pitch_link" reason="Adjacent"/>
+    <disable_collisions link1="left_gripper_link" link2="right_gripper_link" reason="Default"/>
+    <disable_collisions link1="left_gripper_link" link2="wrist_roll_link" reason="Adjacent"/>
+    <disable_collisions link1="right_gripper_link" link2="wrist_roll_link" reason="Adjacent"/>
+    <disable_collisions link1="wrist_pitch_link" link2="wrist_roll_link" reason="Adjacent"/>
+</robot>

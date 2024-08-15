@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+<robot name="braccio" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="damping_value" value="0.1"/>
+  <xacro:property name="friction_value" value="0.001"/>
+  
+  <link name="world" />
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+	<cylinder length="0.01" radius=".053" />
+      </geometry>
+      <material name="black"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<cylinder length="0.01" radius=".053" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="braccio_base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="gray"/>
+      <origin rpy="0 0 0" xyz="0 0.004 0" />
+    </visual>
+    <inertial>
+      <mass value="2"/>
+      <inertia ixx="0.015" ixy="0" ixz="0" iyy="0.00666666666667" iyz="0" izz="0.0216666666667"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0.004 0"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="shoulder_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_shoulder.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="gray"/>
+      <origin rpy="0 0 0" xyz="-0.0045 0.0055 -0.026"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0045 0.0055 -0.026"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_shoulder.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="elbow_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_elbow.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="gray"/>
+      <origin rpy="0 0 0" xyz="-0.0045 0.005 -0.025"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.0045 0.005 -0.025"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_elbow.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="wrist_pitch_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_wrist_pitch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="gray"/>
+      <origin rpy="0 0 0" xyz="0.003 -0.0004 -0.024"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.003 -0.0004 -0.024"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_wrist_pitch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="wrist_roll_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_wrist_roll.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+      <origin rpy="0 0 0" xyz="0.006 0 0.0"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.006 0 0.0"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_wrist_roll.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_gripper_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_left_gripper.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+      <origin rpy="0 1.5708 0" xyz="0 -0.012 0"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="0 -0.012 0"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_left_gripper.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_gripper_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_right_gripper.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+      <origin rpy="0 1.5708 0" xyz="0 -0.012 0.010"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="0 -0.012 0.010"/>
+      <geometry>
+        <mesh filename="package://moveit_resources_braccio_description/stl/braccio_right_gripper.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link="base_link"/>
+  </joint>
+  <joint name="base_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0.05" upper="5.0" velocity="4.0" acceleration="8.0"/>
+    <origin rpy="0 0 0.0628319" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="braccio_base_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <joint name="shoulder_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="1.6" upper="4.0" velocity="4.0" acceleration="8.0"/>
+    <origin rpy="-2.8 0 0" xyz="0 -.002 0.072"/>
+    <parent link="braccio_base_link"/>
+    <child link="shoulder_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <joint name="elbow_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="1.0" upper="4.6" velocity="4.0" acceleration="8.0"/>
+    <origin rpy="-2.8 0 0" xyz="0 0 0.125"/>
+    <parent link="shoulder_link"/>
+    <child link="elbow_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <joint name="wrist_pitch_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="0.77" upper="4.8" velocity="4.0" acceleration="8.0"/>
+    <origin rpy="-2.8 0 0" xyz="0 0 0.125"/>
+    <parent link="elbow_link"/>
+    <child link="wrist_pitch_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <joint name="wrist_roll_joint" type="revolute">
+    <axis xyz="0 0 -1"/>
+    <limit effort="1000.0" lower="0.2" upper="5.0" velocity="4.0" acceleration="8.0"/>
+    <origin rpy="0 0 2.8" xyz="0 0.0 0.06"/>
+    <parent link="wrist_pitch_link"/>
+    <child link="wrist_roll_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <joint name="gripper_joint" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="2.6" upper="3.85" velocity="4.0" acceleration="4.0"/>
+    <origin rpy="0 2.095  0" xyz="0.010 0 0.03"/>
+    <parent link="wrist_roll_link"/>
+    <child link="right_gripper_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <joint name="sub_gripper_joint" type="revolute">
+    <axis xyz="0 -1 0"/>
+    <mimic joint="gripper_joint"/>
+    <limit effort="1000.0" lower="2.6" upper="3.85" velocity="4.0" acceleration="4.0"/>
+    <origin rpy="0 1.0466 0" xyz="-0.010 0 0.03"/>
+    <parent link="wrist_roll_link"/>
+    <child link="left_gripper_link"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}"/>
+  </joint>
+  <material name="gray">
+    <color rgba="0.572 0.584 0.568 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="0.8 0.8 0.8 1.0"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 0.50"/>
+  </material>
+
+</robot>

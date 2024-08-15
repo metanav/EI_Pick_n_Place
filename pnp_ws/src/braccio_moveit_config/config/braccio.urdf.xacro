@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="braccio">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import braccio urdf file -->
+    <xacro:include filename="$(find moveit_resources_braccio_description)/urdf/braccio_arm.xacro" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="braccio.ros2_control.xacro" />
+
+
+    <xacro:braccio_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>
